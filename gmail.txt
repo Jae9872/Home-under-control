@@ -1,0 +1,5 @@
+Authuser=shimsilky@gmail.com
+AuthPass=15984723
+UseSTARTTLS=YES
+UseTLS=YES
+

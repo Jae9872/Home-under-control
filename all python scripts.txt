@@ -1,0 +1,46 @@
+
+fan
+
+
+import RPi.GPIO as GPIO
+import time
+
+GPIO.setmode(GPIO.BCM)
+Fan = 12
+GPIO.setup(Fan,GPIO.OUT)
+GPIO.output(Fan,GPIO.HIGH)
+time.sleep(5)
+GPIO.output(Fan,GPIO.LOW)
+GPIO.cleanup()
+(END)
+
+
+opendoor
+
+
+
+import RPi.GPIO as GPIO
+import time
+
+GPIO.setmode(GPIO.BCM)
+Door = 17
+GPIO.setup(Door,GPIO.OUT)
+GPIO.output(Door,GPIO.HIGH)
+time.sleep(10)
+GPIO.cleanup()
+opendoor.py (END)
+
+
+buzzer
+
+import RPi.GPIO as GPIO
+import time
+
+GPIO.setmode(GPIO.BCM)
+Buzz = 27
+GPIO.setup(Buzz,GPIO.OUT)
+GPIO.output(Buzz,GPIO.HIGH)
+time.sleep(5)
+GPIO.output(Buzz,GPIO.LOW)
+GPIO.cleanup()
+buzzer.py (END)

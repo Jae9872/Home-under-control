@@ -1,0 +1,39 @@
+#Importing the GPIO libraries
+import RPi.GPIO as GPIO
+
+#Import time libraries
+import time
+
+#Enable the BCM mode
+GPIO.setmode(GPIO.BCM)
+
+#Define variable and assign the GPIO pins
+#Here GPIO4 is connected to Motion sensor OUT pin
+PIR_PIN = 26
+
+Buzz = 27
+GPIO.setup(Buzz, GPIO.OUT)
+
+#Setting the GPIO4 as input pin to send recieve the value from MotionSensor
+GPIO.setup(PIR_PIN, GPIO.IN)
+
+try:
+        #delay for 2 seconds
+        time.sleep(2)
+        print "Motion Sensor is ON"
+        #While loop to continously detect the motion
+        while True:
+                if GPIO.input(PIR_PIN):
+                        print "#######  Motion Detected! ########"
+                        print GPIO.input(PIR_PIN)
+                        GPIO.output(Buzz,GPIO.HIGH)
+                        time.sleep(1)
+                else:
+                        print "Nothing Detected!"
+                        print GPIO.input(PIR_PIN)
+                        GPIO.output(Buzz,GPIO.LOW)
+                        time.sleep(1)
+        GPIO.output(Buzz,GPIO.LOW)
+except KeyboardInterrupt:
+        print "Quit"
+        GPIO.cleanup()

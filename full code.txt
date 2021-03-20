@@ -1,0 +1,269 @@
+import RPi.GPIO as GPIO
+import time
+
+GPIO.setmode(GPIO.BCM)
+Door = 17
+GPIO.setup(Door,GPIO.OUT)
+GPIO.output(Door,GPIO.HIGH)
+time.sleep(10)
+GPIO.cleanup()
+(END)
+Python script for facerecognition with email:-	
+#!/bin/bash
+
+echo "Taking picture !!"
+raspistill -o image1.jpg
+
+echo "Uploading and Analyzing.. Please wait !!"
+aws s3 cp image1.jpg s3://facerecog-bucket1
+
+sleep 5
+
+picName="image1.jpg"
+
+foo=$(cat <<EOF
+{
+"S3Object":{
+"Bucket":"facerecog-bucket1",
+"Name":"$picName"
+}
+}
+EOF
+)
+
+echo $foo
+
+Face_id=$(aws rekognition search-faces-by-image --image "$foo" --collection-id "Studentcollect1" --region us-east-1 --profile default| jq '.FaceMatches| .[] | .Face.FaceId')
+
+faceid=$(echo "$Face_id" | sed -e 's/^"//' -e 's/"$//')
+
+Arpitha="ff8f57a8-aa20-4e1b-90c2-418c2998c2f2"
+Jamal="ba2b54e4-703a-4f88-aea1-77a4b5ae7c8c"
+Harshitha="c4663b89-9214-44af-8f72-9a2a3583d9d8"
+Asha="be3495ea-9332-49c5-9c5a-6f292c5ff7e1"
+Kaveri="1347313c-85d9-4cfa-a9da-467a7e9408e0"
+
+
+
+if [ $faceid = $Arpitha ]
+then
+    echo "Hai Arpitha, Welcome"
+    python /home/pi/opendoor.py
+    aws sns publish --topic-arn arn:aws:sns:us-east-1:685301757882:my-topic --message "Arpitha has arrived at home"
+
+
+Python script Buzzer:-
+import RPi.GPIO as GPIO
+import time
+
+GPIO.setmode(GPIO.BCM)
+Buzz = 27
+GPIO.setup(Buzz,GPIO.OUT)
+GPIO.output(Buzz,GPIO.HIGH)
+time.sleep(5)
+GPIO.output(Buzz,GPIO.LOW)
+GPIO.cleanup()
+
+Motion sensor:-
+#Importing the GPIO libraries
+import RPi.GPIO as GPIO
+#Import time libraries
+import time
+#Enable the BCM mode
+GPIO.setmode(GPIO.BCM)
+#Define variable and assign the GPIO pins
+#Here GPIO4 is connected to Motion sensor OUT pin
+PIR_PIN = 26
+Buzz = 27
+GPIO.setup(Buzz, GPIO.OUT)
+#Setting the GPIO4 as input pin to send recieve the value from MotionSensor
+GPIO.setup(PIR_PIN, GPIO.IN)
+try:
+        #delay for 2 seconds
+        time.sleep(2)
+        print "Motion Sensor is ON"
+        #While loop to continously detect the motion
+        while True:
+                if GPIO.input(PIR_PIN):
+                        print "#######  Motion Detected! ########"
+                        print GPIO.input(PIR_PIN)
+                        GPIO.output(Buzz,GPIO.HIGH)
+                        time.sleep(1)
+                else:
+                        print "Nothing Detected!"
+                        print GPIO.input(PIR_PIN)
+                        GPIO.output(Buzz,GPIO.LOW)
+                        time.sleep(1)	
+        GPIO.output(Buzz,GPIO.LOW)
+except KeyboardInterrupt:
+        print "Quit"
+        GPIO.cleanup()
+		
+Python script firesensor:-
+import RPi.GPIO as GPIO
+import time
+GPIO.setmode(GPIO.BCM)
+Buzz = 27
+GPIO.setup(Buzz, GPIO.OUT)
+Fire_PIN = 21
+GPIO.setup(Fire_PIN, GPIO.IN)
+try:
+time.sleep(2)
+ print "Fire Sensor is ON"
+ Fvalue=0
+  while True:
+                if Fvalue==GPIO.input(Fire_PIN):
+                        print "Fire Detected!"
+                        print GPIO.input(Fire_PIN)
+                        GPIO.output(Buzz,GPIO.HIGH)
+                        time.sleep(1)
+                else:
+                        print "Nothing Detected!"
+                        print GPIO.input(Fire_PIN)
+                        GPIO.output(Buzz,GPIO.LOW)
+                        time.sleep(1)
+              except KeyboardInterrupt:
+        print "Quit"
+        GPIO.cleanup()
+Python script Water sensor:-
+import RPi.GPIO as GPIO
+import time
+
+GPIO.setmode(GPIO.BCM)
+
+Buzz = 27
+GPIO.setup(Buzz, GPIO.OUT)
+
+Water_PIN = 19
+GPIO.setup(Water_PIN, GPIO.IN)
+
+try:
+        time.sleep(2)
+        print "Fire Sensor is ON"
+        Fvalue=0
+        while True:
+                if Fvalue==GPIO.input(Water_PIN):
+                        print "Water Detected!"
+                        print GPIO.input(Water_PIN)
+                        GPIO.output(Buzz,GPIO.HIGH)
+                        time.sleep(1)
+                else:
+                        print "Nothing Detected!"
+                        print GPIO.input(Water_PIN)
+                        GPIO.output(Buzz,GPIO.LOW)
+                        time.sleep(1)
+                GPIO.output(Buzz,GPIO.LOW)
+except KeyboardInterrupt:
+        print "Quit"
+        GPIO.cleanup()
+
+
+Python script of Fan1-
+import RPi.GPIO as GPIO
+import time
+
+GPIO.setmode(GPIO.BCM)
+Fan = 12
+GPIO.setup(Fan,GPIO.OUT)
+GPIO.output(Fan,GPIO.HIGH)
+time.sleep(5)
+GPIO.output(Fan,GPIO.LOW)
+GPIO.cleanup()
+Python script Fan2:-
+import RPi.GPIO as GPIO
+import time
+GPIO.setmode(GPIO.BCM)
+Fan = 16
+GPIO.setup(Fan,GPIO.OUT)
+GPIO.output(Fan,GPIO.HIGH)
+time.sleep(5)
+GPIO.output(Fan,GPIO.LOW)
+GPIO.cleanup()
+	
+Python script Light:-
+
+import RPi.GPIO as GPIO
+import time
+GPIO.setmode(GPIO.BCM)
+LED = 13
+GPIO.setup(LED,GPIO.OUT)
+GPIO.output(LED,GPIO.HIGH)
+time.sleep(5)
+GPIO.output(LED,GPIO.LOW)
+GPIO.cleanup()
+Light1:-
+import RPi.GPIO as GPIO
+import time
+
+GPIO.setmode(GPIO.BCM)
+LED = 6
+GPIO.setup(LED,GPIO.OUT)
+GPIO.output(LED,GPIO.HIGH)
+time.sleep(5)
+GPIO.output(LED,GPIO.LOW)
+GPIO.cleanup()
+
+Python script Light2:-
+
+import RPi.GPIO as GPIO
+import time
+GPIO.setmode(GPIO.BCM)
+LED = 22
+GPIO.setup(LED,GPIO.OUT)
+GPIO.output(LED,GPIO.HIGH)
+time.sleep(5)
+GPIO.output(LED,GPIO.LOW)
+GPIO.cleanup()
+
+Python script Light3-
+import RPi.GPIO as GPIO
+import time
+GPIO.setmode(GPIO.BCM)
+LED = 5
+GPIO.setup(LED,GPIO.OUT)
+GPIO.output(LED,GPIO.HIGH)
+time.sleep(5)
+GPIO.output(LED,GPIO.LOW)
+GPIO.cleanup()
+
+Python script Light4:-
+
+import RPi.GPIO as GPIO
+import time
+GPIO.setmode(GPIO.BCM)
+LED = 23
+GPIO.setup(LED,GPIO.OUT)
+GPIO.output(LED,GPIO.HIGH)
+time.sleep(5)
+GPIO.output(LED,GPIO.LOW)
+GPIO.cleanup()
+
+Python script Gassensor-
+
+import RPi.GPIO as GPIO
+import time
+GPIO.setmode(GPIO.BCM)
+Buzz = 27
+GPIO.setup(Buzz, GPIO.OUT)
+
+Fire_PIN = 20
+GPIO.setup(Fire_PIN, GPIO.IN)
+
+try:
+        time.sleep(2)
+        print "Gas Sensor is ON"
+        Fvalue=0
+        while True:
+                if Fvalue==GPIO.input(Fire_PIN):
+                        print "Gas Detected!"
+                        print GPIO.input(Fire_PIN)
+                        GPIO.output(Buzz,GPIO.HIGH)
+                        time.sleep(1)
+                else:
+                        print "Nothing Detected!"
+                        print GPIO.input(Fire_PIN)
+                        GPIO.output(Buzz,GPIO.LOW)
+                        time.sleep(1)
+except KeyboardInterrupt:
+        print "Quit"
+        GPIO.cleanup()

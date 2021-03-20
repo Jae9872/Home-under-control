@@ -1,0 +1,44 @@
+pi@raspberrypi:~ $ less facerecog.sh
+#!/bin/bash
+
+echo "Taking picture !!"
+raspistill -o image1.jpg
+
+echo "Uploading and Analyzing.. Please wait !!"
+aws s3 cp image1.jpg s3://facerecog-bucket1
+
+sleep 5
+
+picName="image1.jpg"
+
+foo=$(cat <<EOF
+{
+"S3Object":{
+"Bucket":"facerecog-bucket1",
+"Name":"$picName"
+}
+}
+EOF
+)
+
+echo $foo
+
+Face_id=$(aws rekognition search-faces-by-image --image "$foo" --collection-id "Studentcollect1" --region us-east-1 --profile default| jq '.FaceMatches| .[] | .Face.FaceId')
+
+faceid=$(echo "$Face_id" | sed -e 's/^"//' -e 's/"$//')
+
+Arpitha="ff8f57a8-aa20-4e1b-90c2-418c2998c2f2"
+Jamal="ba2b54e4-703a-4f88-aea1-77a4b5ae7c8c"
+Harshitha="c4663b89-9214-44af-8f72-9a2a3583d9d8"
+Asha="be3495ea-9332-49c5-9c5a-6f292c5ff7e1"
+Kaveri="1347313c-85d9-4cfa-a9da-467a7e9408e0"
+
+if [ $faceid = $Arpitha ]
+then
+    echo "Hai Arpitha, Welcome"
+    python /home/pi/opendoor.py
+    aws sns publish --topic-arn arn:aws:sns:us-east-1:685301757882:my-topic --message "Arpitha has arrived at home"
+elif [ $faceid = $Jamal ]
+then
+    echo "Hai Jamal, Welcome"
+f
