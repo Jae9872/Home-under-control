@@ -1,0 +1,24 @@
+Working methodology:-
+1)     After powering on the system, the controller keeps monitoring different parts of the
+        system.       
+The admin should take the images of all the persons who are authorised to the place.
+Every image is converted to grayscale and then the controller converts the grayscale image to the binary code  called as algorithm. The algorithm is created with checking the 17 points of the face.
+Whenever any person enters the house then the controller captures that persons image.
+Then the image algorithm is compared with the given algorithms. If the person is authorised then the controller send the signal to the magnetic door lock . and then the door is opened .
+If the person is unauthorised then the door will get locked and the buzzer situated in the home starts beeping.
+Whenever the persons image is recognised the controller send the email to the user that a person has arrived with the name of the person (helps the parents to get information of the kids).If the person is unauthorised then the mail is sent that the “An unauthorised person has been arrived at the home “if the person is any relative to whom the entry is allowed then the admin has the power of opening the door from any place.
+Every person who enters the home his picture is saved in the controller and which is accessible only when any display is connected.
+The admin can view the external view like the video also for surveillance but in this project it is not made .but it cam be done through the open cv method just by using the IP address of the controller.
+Automation:-
+The home automation is done through IOT all the devices that are connected to the devices can be controlled by the controller. A person who is not in a distance nearer to the home can also  control the devices connected to the controller by the help of internet protocol address.
+In this project we are controlling the light and fans. Also the external 230 volts devices can also be controlled by this just by using relay and transistor .
+Security:-
+ Motion sensor:-
+A motion sensor is situated at the compound of the home model which senses the motion if the persons motion is detected the the controller send the signal to the buzzer.
+
+ Fire sensor:-
+This sensor is used to avoid more destruction from the fire .so when any fore is generated then the controller make the buzzer ON.
+ LPG sensor:-
+The sensor senses the gas if any gas is leaking then it sends the signal to the buzzer .alerting the admin of any accidents.
+Water sensor :-
+This sensor senses thev water .this is mainly required at rainy days to avoid clothes getting wet from the rain .
